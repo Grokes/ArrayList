@@ -147,10 +147,20 @@ namespace ArrayList
             Array.Copy(_array, newArray, _length);
             _array = newArray;
         }
+        public void Decreathlength(int countElements = 1)
+        {
+            int newLength = _length;
+            while (newLength >= Count * 1.2)
+            {
+                newLength = (int)(newLength * 0.9 - countElements);
+            }
+            if (newLength < Count) newLength = Count; 
+            int[] newArray = new int[newLength];
+            Array.Copy(_array, newArray, newLength);
+            _array = newArray;
+        }
     }
 }
-
-//2)Написать метод для уменьшения размера массива(По аналогии с Increathlength)
 
 //3)Написать удаление элемента по индексу
 
