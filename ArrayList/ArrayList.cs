@@ -109,11 +109,11 @@ namespace ArrayList
             }
 
             int max = _array[0];
-            foreach (var el in _array)
+            for (int i = 0; i < Count; ++i)
             {
-                if (el > max)
+                if (_array[i] > max)
                 {
-                    max = el;
+                    max = _array[i];
                 }
             }
             return max;
@@ -126,11 +126,11 @@ namespace ArrayList
             }
 
             int min = _array[0];
-            foreach (var el in _array)
+            for (int i = 0; i < Count; ++i)
             {
-                if (el < min)
+                if (_array[i] < min)
                 {
-                    min = el;
+                    min = _array[i];
                 }
             }
             return min;
