@@ -12,11 +12,16 @@ namespace ArrayList
             arrList.Add(10);
             arrList.Add(10);
             arrList.Add(10);
-            arrList.Add(7,7);
+            arrList.Add(0,7);
             Print(arrList);
             Console.WriteLine(arrList.Max());
             Console.WriteLine(arrList.Min());
-            arrList.Decreathlength();
+            arrList.Delete(0);
+            arrList.Delete(2);
+            Print(arrList);
+            arrList.Remove(10);
+            Print(arrList);
+
         }
 
         static void Print(ArrayList arr)

@@ -101,6 +101,34 @@ namespace ArrayList
             }
         }
 
+        public void Delete(uint ind)
+        {
+            if (ind > Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (_length > Count * 2)
+            {
+                Decreathlength();
+            }
+
+            --Count;
+            for (uint i = ind; i < Count; ++i)
+            {
+                int next = _array[i+1];
+                _array[i] = next;
+            } 
+        }
+        public void Remove(int elem)
+        {
+            int ind = Array.IndexOf(_array, elem);
+            while (ind >= 0 && ind < Count)
+            {
+                Delete((uint)ind);
+                ind = Array.IndexOf(_array, elem);
+            }
+        }
+
         public int Max()
         {
             if (Count == 0)
@@ -147,7 +175,7 @@ namespace ArrayList
             Array.Copy(_array, newArray, _length);
             _array = newArray;
         }
-        public void Decreathlength(int countElements = 1)
+        private void Decreathlength(int countElements = 1)
         {
             int newLength = _length;
             while (newLength >= Count * 1.2)
@@ -161,7 +189,3 @@ namespace ArrayList
         }
     }
 }
-
-//3)Написать удаление элемента по индексу
-
-//4)Написать метод удаления элементов. То есть я хочу удалить из списка все элементы равные 5(название метода Remove(int element)) 1, 5, 2, 3, 5 => 1, 2, 3
