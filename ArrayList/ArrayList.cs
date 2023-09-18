@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArrayList
 {
-    public class ArrayList
+    public class ArrayList: IEnumerable
     {
         private int _length { get { return _array.Length; } }
         private int[] _array;
@@ -186,6 +187,11 @@ namespace ArrayList
             int[] newArray = new int[newLength];
             Array.Copy(_array, newArray, newLength);
             _array = newArray;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new ArrayListEnumerator(_array, Count);
         }
     }
 }

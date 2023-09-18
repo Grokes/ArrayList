@@ -21,6 +21,10 @@ namespace ArrayList
             Print(arrList);
             arrList.Remove(10);
             Print(arrList);
+            foreach (var el in arrList)
+            {
+                Console.WriteLine(el.ToString());
+            }
 
         }
 
