@@ -7,7 +7,7 @@ namespace ArrayList
         static void Main(string[] args)
         {
             int[] array = new int[] { 1, 2, 3, 4, 5, 6 };
-            ArrayList arrList = new ArrayList(array);
+            ArrayList<int> arrList = new ArrayList<int>(array);
             Print(arrList);
             arrList.Add(10);
             arrList.Add(10);
@@ -21,18 +21,15 @@ namespace ArrayList
             Print(arrList);
             arrList.Remove(10);
             Print(arrList);
-            foreach (var el in arrList)
-            {
-                Console.WriteLine(el.ToString());
-            }
+           
 
         }
 
-        static void Print(ArrayList arr)
+        static void Print(IEnumerable arr)
         {
-            for (int i = 0; i < arr.Count; ++i)
+            foreach (var el in arr)
             {
-                Console.Write(arr[i] + " ");
+                Console.Write(el.ToString() + " ");
             }
             Console.WriteLine();
         }

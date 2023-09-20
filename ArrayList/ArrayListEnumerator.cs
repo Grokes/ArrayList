@@ -7,33 +7,44 @@ using System.Threading.Tasks;
 
 namespace ArrayList
 {
-    internal class ArrayListEnumerator : IEnumerator
+    internal class ArrayListEnumerator<T> : IEnumerator<T>
     {
-        int[] _array;
-        public int Count { get; private set; }
-        int ind = -1;
-        public ArrayListEnumerator(int[] arr, int Count) 
+        private readonly T[] _array;
+        private readonly int _count;
+        private int _ind = -1;
+        public ArrayListEnumerator(T[] arr, int Count) 
         {
             _array = arr;
-            this.Count = Count;
+            this._count = Count;
         }
-        public object Current
+        object IEnumerator.Current
         {
             get
             {
-                if (ind == -1 || ind >= Count)
+                if (_ind == -1 || _ind >= _count)
                 {
                     throw new IndexOutOfRangeException();
                 }
-                return _array[ind];
+                return _array[_ind];
             }
         }
 
+        T IEnumerator<T>.Current
+        {
+            get
+            {
+                if (_ind == -1 || _ind >= _count)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return _array[_ind];
+            }
+        }
         public bool MoveNext()
         {
-            if (ind < Count - 1)
+            if (_ind < _count - 1)
             {
-                ++ind;
+                ++_ind;
                 return true;
             }
             else return false;
@@ -41,7 +52,13 @@ namespace ArrayList
 
         public void Reset()
         {
-            ind = -1;
+            _ind = -1;
+        }
+
+        public void Dispose()
+        {
+            //Console.WriteLine("Всё очень плохо");
+            //throw new NotImplementedException();
         }
     }
 }

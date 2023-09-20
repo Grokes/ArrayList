@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace ArrayList
 {
-    public class ArrayList: IEnumerable
+    public class ArrayList<T>: IEnumerable<T> where T: IComparable<T>
     {
         private int _length { get { return _array.Length; } }
-        private int[] _array;
+        private T[] _array;
         public int Count { get; private set; }
 
         public ArrayList()
         {
-            _array = new int[7];
+            _array = new T[7];
             Count = 0;
         }
 
         public ArrayList(int length)
         {
-            _array = new int[length];
+            _array = new T[length];
             Count = 0;
         }
 
-        public ArrayList(int[] arr)
+        public ArrayList(T[] arr)
         {
             int length = (int)(arr.Length * 1.5);
-            _array = new int[length];
+            _array = new T[length];
 
             for (int i = 0; i < arr.Length; i++)
             {
@@ -38,7 +38,7 @@ namespace ArrayList
             Count = arr.Length;
         }
 
-        public int this[int index]
+        public T this[int index]
         {
             get
             {
@@ -60,7 +60,7 @@ namespace ArrayList
             }
         }
 
-        public void Add(int elem)
+        public void Add(T elem)
         {
             if (Count >= _length)
             {
@@ -68,7 +68,7 @@ namespace ArrayList
             }
             _array[Count++] = elem;
         }
-        public void Add(int[] arr)
+        public void Add(T[] arr)
         {
             if (_length <= arr.Length + Count)
             {
@@ -79,7 +79,7 @@ namespace ArrayList
                 _array[Count++] = el;
             }
         }
-        public void Add(uint ind, int elem)
+        public void Add(uint ind, T elem)
         {
             if (ind > Count)
             {
@@ -90,13 +90,13 @@ namespace ArrayList
                 Increathlength();
             }
 
-            int cur = _array[ind];
+            T cur = _array[ind];
             _array[ind] = elem;
             ++Count;
 
             for (uint i = ind + 1; i < Count; ++i)
             {
-                int next = _array[i];
+                T next = _array[i];
                 _array[i] = cur;
                 cur = next;
             }
@@ -116,11 +116,11 @@ namespace ArrayList
             --Count;
             for (uint i = ind; i < Count; ++i)
             {
-                int next = _array[i+1];
+                T next = _array[i+1];
                 _array[i] = next;
             } 
         }
-        public void Remove(int elem)
+        public void Remove(T elem)
         {
             int ind = Array.IndexOf(_array, elem);
             while (ind >= 0 && ind < Count)
@@ -130,34 +130,34 @@ namespace ArrayList
             }
         }
 
-        public int Max()
+        public T Max()
         {
             if (Count == 0)
             {
                 throw new Exception("Array empty");
             }
 
-            int max = _array[0];
+            T max = _array[0];
             for (int i = 0; i < Count; ++i)
             {
-                if (_array[i] > max)
+                if (_array[i].CompareTo(max) > 0)
                 {
                     max = _array[i];
                 }
             }
             return max;
         }
-        public int Min()
+        public T Min()
         {
             if (Count == 0)
             {
                 throw new Exception("Array empty");
             }
 
-            int min = _array[0];
+            T min = _array[0];
             for (int i = 0; i < Count; ++i)
             {
-                if (_array[i] < min)
+                if (_array[i].CompareTo(min) < 0)
                 {
                     min = _array[i];
                 }
@@ -172,7 +172,7 @@ namespace ArrayList
             {
                 newLength = (int)(newLength * 1.5 + countElements);
             }
-            int[] newArray = new int[newLength];
+            T[] newArray = new T[newLength];
             Array.Copy(_array, newArray, _length);
             _array = newArray;
         }
@@ -184,14 +184,19 @@ namespace ArrayList
                 newLength = (int)(newLength * 0.9 - countElements);
             }
             if (newLength < Count) newLength = Count; 
-            int[] newArray = new int[newLength];
+            T[] newArray = new T[newLength];
             Array.Copy(_array, newArray, newLength);
             _array = newArray;
         }
 
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return new ArrayListEnumerator<T>(_array, Count);
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new ArrayListEnumerator(_array, Count);
+            return new ArrayListEnumerator<T>(_array, Count);
         }
     }
 }
